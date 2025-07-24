@@ -1,6 +1,7 @@
 # habit-app
 
-This is an OOP python project for university. It is a backend app that tracks one's habits.
+This is an OOP python project for university. 
+It is a backend app that tracks one's habits.
 
 ## main.py
 
