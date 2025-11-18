@@ -173,7 +173,7 @@ class habit_db:
             print(f"{e} error occurred.")     
     
     def streak_counter(self):
-        """resets current streak if broken and habit status."""
+        """resets current streak and habit status if broken."""
         try: 
             #fetches daily habits
             self.cursor.execute(
@@ -201,7 +201,7 @@ class habit_db:
                 FROM habits WHERE periodicity = 'Weekly'"""
             )   
             weekly_habits = self.cursor.fetchall()
-
+    
             for habit in weekly_habits:
                 weeks = habit[3]/7
                 days_left = habit[3]//7
@@ -226,3 +226,4 @@ class habit_db:
             self.conn.commit()
         except Exception as e:
             print(f"{e} error occurred.")
+
