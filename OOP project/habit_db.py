@@ -15,7 +15,7 @@ class habit_db:
         #creates and connects to a habits database if it doesn't exists.
         self.cursor.execute(
             """CREATE TABLE IF NOT EXISTS habits(
-            name TEXT NOT NULL,
+            name TEXT NOT NULL PRIMARY KEY,
             periodicity TEXT NOT NULL,
             date_created TEXT DEFAULT (date('now')),
             current_streak INTEGER DEFAULT 0,
