@@ -8,11 +8,15 @@ It is a backend app that tracks one's habits.
 
 First clone the repository using 
 
+```bash
 https://github.com/Mosayab/habit-app
+```
 
 Then install the requirements using
 
+```bash
 pip install -r requirements.txt
+```
 
 ## main.py
 
