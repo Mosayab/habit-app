@@ -4,20 +4,24 @@ This is an OOP python project for university.
 
 It is a backend app that tracks one's habits.
 
+## Installation
+
+First clone the repository using 
+https://github.com/Mosayab/habit-app
+
+Then install the requirements using 
+pip install -r requirements.txt
+
 ## main.py
 
 Uses questionary as the UI in the terminal.
 
 Loops through the code with a while loop until it is closed.
 
+Displays the functions the app can run.
+
 ## habit_db.py
 
-Uses sqlite3 to store the user's data.
+Has two database tables, habits and logs, to store information.
 
-### Notes about the examples function
-
-You should edit the examples function to with correct data for proper use.
-
-Date format should always be in year-month-day.
-
-Periodicity should always be written as either "Daily" or "Weekly"
+Contains all function codes.
