@@ -17,6 +17,7 @@ while start == True:
       "View longest streak of a habit",
       "View longest streak of all habits",
       "Load examples",
+      "habit stats",
       "Close app"
     ]
   ).ask()
@@ -74,6 +75,12 @@ while start == True:
 
     case "Load examples":
       hdb.examples()
+
+    case "habit stats":
+      hdb.print_habits('All')
+      name = questionary.text("Habit name: ").ask()
+      hdb.habit_stats(name)
+      hdb.habit_logs(name)
 
     case "Close app":
       start = False

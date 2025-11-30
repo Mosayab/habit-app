@@ -1,5 +1,6 @@
 import sqlite3
-from datetime import datetime
+import random
+from datetime import datetime, timedelta
 
 class habit_db:
 
@@ -8,7 +9,7 @@ class habit_db:
         self.conn = sqlite3.connect("Habits.db")
         self.cursor = self.conn.cursor()
         self.habits_table()
-        self.streak_counter()
+        self.logs_table()
 
     def habits_table(self):
         '''create the habits table.'''
@@ -19,10 +20,24 @@ class habit_db:
             periodicity TEXT NOT NULL,
             date_created TEXT DEFAULT (date('now')),
             current_streak INTEGER DEFAULT 0,
-            streak_since TEXT DEFAULT (date('now')),
             longest_streak INTEGER DEFAULT 0,
-            status TEXT DEFAULT 'Incomplete',
-            last_updated TEXT NULL)"""
+            status TEXT DEFAULT 'Incomplete'
+            )"""
+        )
+        self.conn.commit()
+
+    def logs_table(self):
+        '''create the logs table.'''
+        #creates and connects to a logs database if it doesn't exists.
+        self.cursor.execute(
+            """CREATE TABLE IF NOT EXISTS logs(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            habit_name TEXT NOT NULL,
+            date TEXT DEFAULT (date('now')),
+            status TEXT NOT NULL,
+            streak INTEGER DEFAULT 0,
+            FOREIGN KEY (habit_name) REFERENCES habits(name)
+            )"""
         )
         self.conn.commit()
 
@@ -31,25 +46,83 @@ class habit_db:
         self.conn.close()
 
     def examples(self):
-        """loads example habits if not loaded."""
+        """loads example habits if not loaded with 4 weeks of predefined data."""
         examples = [
-            #name, periodicity, date_created, current_streak, streak_since, longest_streak, status, last_updated.
-            #PS: periodicity and status start with capital a letter, date format is %Y-%m-%d.
-            ('h1', 'Daily', '2024-12-31', 3, '2025-06-10', 51, 'Incomplete', '2025-06-13'),
-            ('h2', 'Weekly', '2024-12-31', 3, '2025-06-10', 51, 'Incomplete', '2025-06-13'),
-            ('h3', 'Daily', '2024-12-31', 3, '2025-06-10', 51, 'Incomplete', '2025-06-13'),
-            ('h4', 'Weekly', '2024-12-31', 3, '2025-06-10', 51, 'Incomplete', '2025-06-13'),
-            ('h5', 'Daily', '2024-12-31', 3, '2025-06-10', 51, 'Incomplete', '2025-06-13')
+            ('h1', 'Daily'),
+            ('h2', 'Weekly'),
+            ('h3', 'Daily'),
+            ('h4', 'Weekly'),
+            ('h5', 'Daily')
         ]
 
         try:
+            #makes sure examples aren't already loaded
+            self.cursor.execute("SELECT * FROM habits WHERE name = 'h1'")
+            loaded = self.cursor.fetchone()
+
+            if loaded:
+                print("Examples already loaded.")
+                return
+            
+            today = datetime.now().date()
+            start_date = today - timedelta(days=27)
+
             #checks if the habit already exists before adding it.
-            for eg in examples:
+            for name, periodicity in examples:
                 self.cursor.execute(
-                    """INSERT OR IGNORE INTO habits
-                    (name, periodicity, date_created, current_streak, streak_since, longest_streak, status, last_updated)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", eg
+                    """INSERT OR IGNORE INTO habits (name, periodicity, date_created) VALUES (?, ?, ?)""",
+                    (name, periodicity, start_date.isoformat())
                 )
+
+            for name, periodicity in examples:
+                current_date = start_date
+                streak = 0
+
+                while current_date <= today:
+                    insert_event = False
+
+                    if periodicity.lower() == "daily":
+                        insert_event = True
+                    elif periodicity.lower() == "weekly" and current_date.weekday() == 0:
+                        insert_event = True
+
+                    if insert_event:
+                        completed = random.random() < 0.8
+                        status = "Completed" if completed else "Incomplete"
+
+                        # streak maths
+                        if completed:
+                            streak += 1
+                        else:
+                            streak = 0
+
+                        self.cursor.execute(
+                            """INSERT OR IGNORE INTO logs (habit_name, date, status, streak) VALUES (?, ?, ?, ?)""",
+                            (name, current_date.isoformat(), status, streak)
+                            )
+                        
+                    current_date += timedelta(days=1)
+                    
+                    self.cursor.execute(
+                        """ SELECT streak FROM logs
+                        WHERE habit_name = ?
+                        ORDER BY date DESC LIMIT 1""",
+                        (name,)
+                    )
+                    log = self.cursor.fetchone()
+                    current_streak = log[0] if log else 0
+
+                    self.cursor.execute(
+                        """SELECT MAX(streak) FROM logs WHERE habit_name = ?""",
+                        (name,)
+                    )
+                    longest_streak = self.cursor.fetchone()[0] or 0
+
+                    self.cursor.execute(
+                        """UPDATE habits
+                        SET current_streak = ?, longest_streak = ?, status = 'Incomplete' WHERE name = ?""",
+                        (current_streak, longest_streak, name)
+                    )
             
             self.conn.commit()
         except Exception as e:
@@ -61,13 +134,17 @@ class habit_db:
             self.cursor.execute("SELECT * FROM habits WHERE name = ?", (name,))
             loaded = self.cursor.fetchone()
 
-            #check if the habit already exists.
+            #check if habit already exists
             if loaded:
                 print("Habit already exists.")
             else:
                 self.cursor.execute(
                     """INSERT INTO habits (name, periodicity) VALUES (?,?)""",
                     (name, periodicity)
+                )
+                self.cursor.execute(
+                    """INSERT INTO logs (habit_name, date, status, streak) VALUES (?, date('now'), 'Incomplete', 0)""",
+                    (name,)
                 )
                 self.conn.commit()
                 print("Habit added successfully.")
@@ -78,17 +155,17 @@ class habit_db:
         """prints all habits or habits of a certain periodicity."""
         try:
             if category == 'Weekly':
-                self.cursor.execute("SELECT name, periodicity, current_streak, status, date_created FROM habits WHERE periodicity = 'Weekly'")
+                self.cursor.execute("SELECT name, periodicity, current_streak, status FROM habits WHERE periodicity = 'Weekly'")
             elif category == 'Daily':
-                self.cursor.execute("SELECT name, periodicity, current_streak, status, date_created FROM habits WHERE periodicity = 'Daily'")
+                self.cursor.execute("SELECT name, periodicity, current_streak, status FROM habits WHERE periodicity = 'Daily'")
             else:
-                self.cursor.execute("SELECT name, periodicity, current_streak, status, date_created FROM habits")
+                self.cursor.execute("SELECT name, periodicity, current_streak, status FROM habits")
 
             habits = self.cursor.fetchall()
             self.conn.commit()
 
             #shows what each value means.
-            print('name---periodicity---current streak---status---date created')
+            print('name---periodicity---current streak---status')
 
             for x in habits:
                 print(x)
@@ -137,85 +214,97 @@ class habit_db:
     def complete_habit(self, name):
         """marks a habit as complete."""
         try:
-            #fetches the habit
+            #checks if the habit exists
             self.cursor.execute(
-                """SELECT COUNT(*) FROM habits 
-                WHERE name = ? AND 
-                status = 'Incomplete' AND
-                (date(last_updated) < date('now') OR last_updated IS NULL)""",
+                """SELECT * FROM habits WHERE name = ?""",
                 (name,)
             )
-            print(f"Matching rows before update: {self.cursor.fetchone()[0]}")
-            
-            #Updates the status, streak and last updated columns
+            loaded = self.cursor.fetchone()
+
+            if loaded:
+                #Updates habit status
+                streak = loaded[3]+1
+                longest_streak = loaded[4]
+
+                if streak > longest_streak:
+                    longest_streak = streak
+
+                self.cursor.execute(
+                    """UPDATE habits SET status = 'Completed', current_streak = ?, longest_streak = ?  WHERE name = ?""",
+                    (streak, longest_streak, name)
+                )
+            else:
+                print("Habit not found.")
+                return
+             
+            #fetch latest habit logs
             self.cursor.execute(
-                """UPDATE habits 
-                SET status = 'Complete',
-                current_streak = current_streak + 1,
-                last_updated = date('now')
-                WHERE name = ? AND 
-                (date(last_updated) < date('now') OR last_updated IS NULL)""",
+                """SELECT streak, status FROM logs
+                WHERE habit_name = ?
+                ORDER BY date DESC LIMIT 1""",
                 (name,)
+            )
+            latest_log = self.cursor.fetchone()
+
+            #streak math
+            if latest_log and latest_log[1] == 'completed':
+                current_streak = latest_log[0] + 1
+            else:
+                current_streak = 1
+
+            #Updates logs 
+            self.cursor.execute(
+                """INSERT INTO logs (habit_name, date, status, streak) VALUES (?, date('now'), 'Completed', ?)""",
+                (name, current_streak)
             )
 
-            #Updates the longest streak if current streak is higher.
-            self.cursor.execute(
-                """UPDATE habits
-                SET longest_streak = current_streak
-                WHERE name = ? AND
-                current_streak > longest_streak""",
-                (name,)
-            )
             self.conn.commit()
+
         except sqlite3.Error as e:
             print(f"{e} error occurred.")
+            
         except Exception as e:
             print(f"{e} error occurred.")     
     
-    def streak_counter(self):
-        """resets current streak and habit status if broken."""
-        try: 
-            #fetches daily habits
+    def habit_stats(self, name):
+        """prints statistics for a specific habit."""
+        try:
             self.cursor.execute(
-                """SELECT name, current_streak, last_updated,
-                COALESCE(julianday(last_updated) - julianday(streak_since), 0) AS day_diff,
-                COALESCE(julianday('now') - julianday(last_updated), 0) AS update_diff
-                FROM habits WHERE periodicity = 'Daily'"""
-            )   
-            daily_habits = self.cursor.fetchall()
+                """SELECT name, periodicity, current_streak, longest_streak, date_created FROM habits WHERE name = ?""",
+                (name,)
+            )
+            habit = self.cursor.fetchone()
 
-            for habit in daily_habits:
-                #Checks if at least a day has passed since last update to reset status.
-                if habit[4] >= 1:
-                    self.cursor.execute("UPDATE habits SET status = 'Incomplete' WHERE name = ?", (habit[0],))
+            if habit:
+                print(f"Habit Stats for {name}:")
+                print(f"Periodicity: {habit[1]}")
+                print(f"Current Streak: {habit[2]}")
+                print(f"Longest Streak: {habit[3]}")
+                print(f"Date Created: {habit[4]}")
+            else:
+                print("Habit not found.")
 
-                    #Checks if streak is broken or not.
-                    if habit[1] <= habit[3] or habit[3] is None:
-                        self.cursor.execute("UPDATE habits SET current_streak = 0 WHERE name = ?", (habit[0],))
-
-            #Fetches weekly habits.
-            self.cursor.execute(
-                """SELECT name, current_streak, last_updated,
-                COALESCE(julianday(last_updated) - julianday(streak_since), 0) AS day_diff,
-                COALESCE(julianday('now') - julianday(streak_since), 0) AS update_diff
-                FROM habits WHERE periodicity = 'Weekly'"""
-            )   
-            weekly_habits = self.cursor.fetchall()
-    
-            for habit in weekly_habits:
-                weeks = habit[3]/7
-                days_left = habit[3]//7
-
-                #Checks if a streak number matches the number of weeks since streak started.
-                if habit[4] >= 7:
-                    self.cursor.execute("UPDATE habits SET status = 'Incomplete' WHERE name = ?", (habit[0],))
-
-                    #Checks if more than a week passed since last update to reset streak.
-                    if habit[4] % 7 > habit[1] or habit[3] is None:
-                        self.cursor.execute("UPDATE habits SET current_streak = 0 WHERE name = ?", (habit[0],))
-  
             self.conn.commit()
+        except Exception as e:
+            print(f"{e} error occurred.")
 
+    def habit_logs(self, name):
+        """prints logs for a specific habit."""
+        try:
+            self.cursor.execute(
+                """SELECT date, status, streak FROM logs WHERE habit_name = ? ORDER BY date""",
+                (name,)
+            )
+            logs = self.cursor.fetchall()
+
+            if logs:
+                print(f"Logs for {name}:")
+                for log in logs:
+                    print(f"Date: {log[0]}, Status: {log[1]}, Streak: {log[2]}")
+            else:
+                print("No logs found for this habit.")
+
+            self.conn.commit()
         except Exception as e:
             print(f"{e} error occurred.")
 
@@ -223,7 +312,7 @@ class habit_db:
         """deletes all habits."""
         try:
             self.cursor.execute("""DELETE FROM habits""")
+            self.cursor.execute("""DELETE FROM logs""")
             self.conn.commit()
         except Exception as e:
             print(f"{e} error occurred.")
-
