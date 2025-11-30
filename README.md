@@ -31,3 +31,11 @@ Displays the functions the app can run.
 Has two database tables, habits and logs, to store information.
 
 Contains all function codes.
+
+## habits table
+
+Stores habit name, periodicity, status, streak, longest streak and date created.
+
+## logs table
+
+Stores habit completion dates and streak
