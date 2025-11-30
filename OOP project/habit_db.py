@@ -4,10 +4,11 @@ from datetime import datetime, timedelta
 
 class habit_db:
 
-    def __init__(self):
+    def __init__(self, db_path="Habits.db"):
         """creates/connects to a database."""
-        self.conn = sqlite3.connect("Habits.db")
+        self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
+        self.cursor.execute("PRAGMA foreign_keys = ON;")
         self.habits_table()
         self.logs_table()
 
@@ -137,6 +138,7 @@ class habit_db:
             #check if habit already exists
             if loaded:
                 print("Habit already exists.")
+                return
             else:
                 self.cursor.execute(
                     """INSERT INTO habits (name, periodicity) VALUES (?,?)""",
@@ -311,8 +313,8 @@ class habit_db:
     def delete_all(self):
         """deletes all habits."""
         try:
-            self.cursor.execute("""DELETE FROM habits""")
             self.cursor.execute("""DELETE FROM logs""")
+            self.cursor.execute("""DELETE FROM habits""")
             self.conn.commit()
         except Exception as e:
             print(f"{e} error occurred.")
