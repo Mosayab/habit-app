@@ -35,7 +35,11 @@ Contains all function codes.
 ## habits table
 
 Stores habit name, periodicity, status, streak, longest streak and date created.
+<img width="1084" height="243" alt="Screenshot 2026-02-10 213606" src="https://github.com/user-attachments/assets/07011015-743c-44d2-9256-75ab977c9a60" />
 
 ## logs table
 
 Stores habit completion dates and streak
+<img width="805" height="130" alt="Screenshot 2026-02-10 213628" src="https://github.com/user-attachments/assets/4482c38c-a9a8-41fc-b292-e7e335a0339b" />
+
+
