@@ -38,6 +38,7 @@ Stores habit name, periodicity, status, streak, longest streak and date created.
 ## logs table
 
 Stores habit completion dates and streak
+<img width="768" height="76" alt="image" src="https://github.com/user-attachments/assets/625c8199-0c61-46b4-999a-447c9872c60b" />
 <img width="805" height="130" alt="Screenshot 2026-02-10 213628" src="https://github.com/user-attachments/assets/4482c38c-a9a8-41fc-b292-e7e335a0339b" />
 
 ## pictures of the apps functions
