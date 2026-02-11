@@ -42,9 +42,15 @@ Stores habit completion dates and streak
 
 ## pictures of the apps functions
 
-<img width="432" height="162" alt="Screenshot 2026-02-10 213654" src="https://github.com/user-attachments/assets/2fa6d149-61c7-4c1b-9ce4-cd8bcbb0c2d0" />
-<img width="423" height="124" alt="Screenshot 2026-02-10 213706" src="https://github.com/user-attachments/assets/f84df5a5-2e45-49e7-97bd-b3194ac06983" />
+all functions
 <img width="445" height="262" alt="Screenshot 2026-02-10 213532" src="https://github.com/user-attachments/assets/c248d57e-cef6-4d9b-83d2-9ee54516051d" />
+
+completing a habit
+<img width="432" height="162" alt="Screenshot 2026-02-10 213654" src="https://github.com/user-attachments/assets/2fa6d149-61c7-4c1b-9ce4-cd8bcbb0c2d0" />
+
+viewing habits
+<img width="423" height="124" alt="Screenshot 2026-02-10 213706" src="https://github.com/user-attachments/assets/f84df5a5-2e45-49e7-97bd-b3194ac06983" />
+
 <img width="436" height="111" alt="Screenshot 2026-02-10 213721" src="https://github.com/user-attachments/assets/efcdbc00-83dc-4bf1-8793-5235e7c0760e" />
 <img width="454" height="156" alt="Screenshot 2026-02-10 213735" src="https://github.com/user-attachments/assets/18b1ce6b-6c14-4637-8a0e-e12b47026793" />
 <img width="464" height="251" alt="Screenshot 2026-02-10 213808" src="https://github.com/user-attachments/assets/af152ea9-4724-488d-a8f5-4a78a4356947" />
