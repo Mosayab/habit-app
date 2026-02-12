@@ -1,6 +1,15 @@
 # habit-app
 
-This is an OOP python project is a backend app that tracks one's habits for university. 
+## Overview
+
+The Habit Tracker is a Python-based backend application designed to help users manage and track their habits efficiently. Utilizing the `questionary` library for a user-friendly command-line interface and `sqlite3` for a lightweight database, this app streamlines the habit tracking process.
+
+## Features
+
+- **Interactive CLI**: Provides a smooth user experience through the `questionary` library.
+- **Persistent Data**: Uses `sqlite3` for storing and retrieving habit information, ensuring data is retained between sessions.
+- **Easy Habit Management**: Create, read, update, and delete habits effortlessly.
+
 
 ## Installation
 
