@@ -2,6 +2,7 @@ import pytest
 from habit_db import habit_db
 
 @pytest.fixture
+
 def db():
     #A habit database for testing
     test_db = habit_db(":memory:")
@@ -37,6 +38,7 @@ def test_add_duplicate_habit(db, capsys):
     assert "Habit already exists." in output.out
 
 def test_complete_habit(db):
+    #Test for completing a habit
     db.add_habit("Test1", "Daily")
     db.complete_habit("Test1")
     db.cursor.execute("SELECT status, current_streak FROM habits WHERE name = ?", ("Test1",))
@@ -47,6 +49,7 @@ def test_complete_habit(db):
     assert logs == ("Completed", 1)
 
 def test_delete_all(db):
+    #Test for deleting all habits
     db.add_habit("Test1", "Daily")
     db.add_habit("Test2", "Daily")
     db.delete_all()

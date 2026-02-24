@@ -318,3 +318,37 @@ class habit_db:
             self.conn.commit()
         except Exception as e:
             print(f"{e} error occurred.")
+
+    def delete_habit(self, name):
+        """deletes a habit"""
+        try:
+            # checks if the habit exists
+            self.cursor.execute(
+                """SELECT * FROM habits WHERE name = ?""",
+                (name,)
+            )
+            loaded = self.cursor.fetchone()
+
+            if loaded:
+                self.cursor.execute("""DELETE FROM logs WHERE habit_name = ?""", (name,))
+                self.cursor.execute("""DELETE FROM habits WHERE name = ?""", (name,))
+            else:
+                print("Habit not found.")
+                return
+        except Exception as e:
+            print(f"{e} error occurred.")
+
+    def habit_names(self):
+        """returns a list of habit names."""
+        try:
+            self.cursor.execute("SELECT name FROM habits")
+            names = self.cursor.fetchall()
+            self.conn.commit()
+
+            print('habit names')
+
+            for n in names:
+                print(n)
+            
+        except Exception as e:
+            print(f"{e} error occurred.")

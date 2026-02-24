@@ -12,6 +12,7 @@ while start == True:
     choices=[
       "Add a habit",
       "Complete habit",
+      "Delete habit",
       "Delete all habits",
       "View habit list",
       "View longest streak of a habit",
@@ -40,7 +41,12 @@ while start == True:
       hdb.incomplete_habits()
       name = questionary.text("Habit name: ").ask()
       hdb.complete_habit(name)
-    
+
+    case "Delete habit":
+      hdb.habit_names()
+      name = questionary.text("Habit name: ").ask()
+      hdb.delete_habit(name)
+
     case "Delete all habits":
       hdb.delete_all()
 
@@ -66,7 +72,7 @@ while start == True:
           hdb.print_habits('All')
 
     case "View longest streak of a habit":
-      hdb.print_habits('All')
+      hdb.habit_names()
       name = questionary.text("Habit name: ").ask()
       hdb.longest_streak(name)
 
@@ -77,7 +83,7 @@ while start == True:
       hdb.examples()
 
     case "habit stats":
-      hdb.print_habits('All')
+      hdb.habit_names()
       name = questionary.text("Habit name: ").ask()
       hdb.habit_stats(name)
       hdb.habit_logs(name)
