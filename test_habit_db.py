@@ -1,5 +1,4 @@
 import pytest
-from holoviews import output
 from habit_db import habit_db
 
 @pytest.fixture
