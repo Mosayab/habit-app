@@ -50,27 +50,34 @@ Stores habit completion dates and streak
 <img width="768" height="76" alt="image" src="https://github.com/user-attachments/assets/625c8199-0c61-46b4-999a-447c9872c60b" />
 <img width="805" height="130" alt="Screenshot 2026-02-10 213628" src="https://github.com/user-attachments/assets/4482c38c-a9a8-41fc-b292-e7e335a0339b" />
 
-## pictures of the apps functions
+## pictures of the app
 
-### all functions
-<img width="445" height="262" alt="Screenshot 2026-02-10 213532" src="https://github.com/user-attachments/assets/c248d57e-cef6-4d9b-83d2-9ee54516051d" />
+all functions
+<img width="435" height="262" alt="Screenshot 2026-02-27 131452" src="https://github.com/user-attachments/assets/efdc563e-79d5-4cc6-9bc8-369d10b7ab1a" />
 
-### completing a habit
-<img width="432" height="162" alt="Screenshot 2026-02-10 213654" src="https://github.com/user-attachments/assets/2fa6d149-61c7-4c1b-9ce4-cd8bcbb0c2d0" />
+adding a habit
+<img width="406" height="133" alt="Screenshot 2026-02-27 131556" src="https://github.com/user-attachments/assets/855638d4-26b4-46f9-92eb-f98bd3cca12f" />
+<img width="392" height="86" alt="Screenshot 2026-02-27 131616" src="https://github.com/user-attachments/assets/e2196da6-e55e-493e-8e84-ea5a1b252abf" />
 
-### viewing habits
-<img width="423" height="124" alt="Screenshot 2026-02-10 213706" src="https://github.com/user-attachments/assets/f84df5a5-2e45-49e7-97bd-b3194ac06983" />
-<img width="436" height="111" alt="Screenshot 2026-02-10 213721" src="https://github.com/user-attachments/assets/efcdbc00-83dc-4bf1-8793-5235e7c0760e" />
+completing a habit
+<img width="445" height="193" alt="Screenshot 2026-02-27 131627" src="https://github.com/user-attachments/assets/7f9a24e3-c1ef-4d23-8b2e-a6ec15435a8d" />
 
-### habit stats where you first get an overview then select a habit to see more details
-<img width="454" height="156" alt="Screenshot 2026-02-10 213735" src="https://github.com/user-attachments/assets/18b1ce6b-6c14-4637-8a0e-e12b47026793" />
-<img width="464" height="251" alt="Screenshot 2026-02-10 213808" src="https://github.com/user-attachments/assets/af152ea9-4724-488d-a8f5-4a78a4356947" />
+deleting a habit
+<img width="405" height="209" alt="Screenshot 2026-02-27 131648" src="https://github.com/user-attachments/assets/8d54e063-3157-46cf-84d4-7e1d71dabc39" />
 
-### looking at the longest streeak for all habits
-<img width="585" height="136" alt="Screenshot 2026-02-10 213833" src="https://github.com/user-attachments/assets/0c23eee8-1ccb-453a-be70-94405e9395e5" />
+viewing habits
+<img width="449" height="157" alt="Screenshot 2026-02-27 131749" src="https://github.com/user-attachments/assets/78b1a553-779d-498a-afdd-65de7cb8bc11" />
+<img width="429" height="134" alt="Screenshot 2026-02-27 131716" src="https://github.com/user-attachments/assets/1f07688e-7bc2-4f59-b694-ac11ef548482" />
+<img width="448" height="92" alt="Screenshot 2026-02-27 131736" src="https://github.com/user-attachments/assets/dc7eef51-c86f-4223-bb1e-e461e03f72a9" />
 
-### deleting habits and opening an empty list
-<img width="518" height="115" alt="Screenshot 2026-02-10 213853" src="https://github.com/user-attachments/assets/54d0c3e9-536d-4657-a4d0-527605937584" />
+viewing longest streak of a habit
+<img width="581" height="204" alt="Screenshot 2026-02-27 131835" src="https://github.com/user-attachments/assets/8612c716-b588-492f-8a5f-c61cbc0c38ba" />
 
-### closing the app
-<img width="395" height="52" alt="Screenshot 2026-02-10 213906" src="https://github.com/user-attachments/assets/4e5ed577-c06b-433b-9a50-e784a8db8737" />
+viewing longeset streak of all habits
+<img width="585" height="135" alt="Screenshot 2026-02-27 131851" src="https://github.com/user-attachments/assets/cc6b5536-edef-41a6-8f60-edb9f906a9b9" />
+
+trying to load the examples multiple times
+<img width="421" height="53" alt="Screenshot 2026-02-27 131924" src="https://github.com/user-attachments/assets/d71f4082-e508-4767-8c81-5ab716ae4e07" />
+
+checking a habit's stats
+<img width="450" height="399" alt="Screenshot 2026-02-27 131947" src="https://github.com/user-attachments/assets/bea59ae9-2aed-4ce0-8c8b-884f2b81a950" />
