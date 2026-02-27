@@ -83,10 +83,10 @@ viewing longeset streak of all habits
 
 <img width="585" height="135" alt="Screenshot 2026-02-27 131851" src="https://github.com/user-attachments/assets/cc6b5536-edef-41a6-8f60-edb9f906a9b9" />
 
-#####trying to load the examples multiple times
+trying to load the examples multiple times
 
 <img width="421" height="53" alt="Screenshot 2026-02-27 131924" src="https://github.com/user-attachments/assets/d71f4082-e508-4767-8c81-5ab716ae4e07" />
 
-####checking a habit's stats
+checking a habit's stats
 
 <img width="450" height="399" alt="Screenshot 2026-02-27 131947" src="https://github.com/user-attachments/assets/bea59ae9-2aed-4ce0-8c8b-884f2b81a950" />
